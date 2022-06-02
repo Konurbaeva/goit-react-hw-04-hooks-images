@@ -97,9 +97,6 @@ export class App extends Component {
                         description={searchQuery}
                     />
                 )}
-
-
-
                 {hits.length > 0 &&
                     <LoadMore isLoading={isLoading} loadMore={this.loadMore} />
                 }

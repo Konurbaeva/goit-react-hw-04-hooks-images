@@ -39,10 +39,11 @@ export default function App() {
     const [modalImage, setModalImage] = useState(null);
 
     const handleFormSubmit = queryFromSearchbar => {
-        console.log('queryFromSearchbar: ', queryFromSearchbar)
         setSearchQuery(queryFromSearchbar)
+        setCurrentPage(1);
         setHits([])
         setPage(1)
+        setErrorMsg(null);
     };
 
     useEffect(() => {
@@ -53,16 +54,18 @@ export default function App() {
         const loadResults = () => {
             setIsLoading(true);
 
-            APIfetch({ searchQuery: searchQuery, currentPage })
+            APIfetch({ searchQuery: searchQuery, currentPage, page })
                 .then(response => {
                     setHits(prevResults => [...prevResults, ...response]);
+                    // setPage(prevPage => prevPage + 1);
                 })
                 .catch(error => setErrorMsg(error.message))
                 .finally(() => setIsLoading(false));
         };
 
         loadResults();
-    }, [searchQuery, currentPage]);
+
+    }, [searchQuery, currentPage, page]);
 
     const toggleModal = () => setShowModal(!showModal);
 
@@ -71,6 +74,10 @@ export default function App() {
         setModalImage(image);
     };
 
+
+    // const loadMore = () => {
+    //     setCurrentPage(prevPage => prevPage + 1);
+    // };
 
     const loadMore = () => {
         setCurrentPage(prevPage => prevPage + 1);

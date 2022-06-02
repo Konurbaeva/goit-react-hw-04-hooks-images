@@ -10,7 +10,7 @@ import Modal from "./Modal/Modal";
 import { getSearch } from "services/api"
 import { LoadMore } from './LoadMore';
 
-export class App extends Component {
+export function App() {
     state = {
         hits: [],
         searchQuery: '',

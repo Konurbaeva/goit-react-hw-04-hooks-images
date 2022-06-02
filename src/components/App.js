@@ -86,10 +86,9 @@ export class App extends Component {
         return (
             <div className={styles.App}>
                 <Searchbar onSubmit={this.handleFormSubmit} />
-                {hits && (
+                {hits.length > 0 && (
                     <ImageGallery images={hits} openModal={this.zoomImage} />
                 )}
-
                 {showModal && (
                     <Modal
                         largeImageURL={modalImage}

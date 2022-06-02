@@ -1,6 +1,6 @@
 import styles from './App.module.css';
 
-import { Component } from "react";
+import { useState, useEffect } from "react";
 import ImageGallery from "./ImageGallery/ImageGallery";
 import Searchbar from "./Searchbar/Searchbar";
 import Loader from "./Loader/Loader";
@@ -11,18 +11,6 @@ import { getSearch } from "services/api"
 import { LoadMore } from './LoadMore';
 
 export default function App() {
-    // state = {
-    //     hits: [],
-    //     searchQuery: '',
-    //     page: 1,
-    //     currentPage: 1,
-    //     showModal: false,
-    //     isLoading: false,
-    //     totalHits: 0,
-    //     errorMsg: '',
-    //     per_page: 7,
-    //     modalImage: null,
-    // };
 
     const [hits, setHits] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
@@ -93,7 +81,7 @@ export default function App() {
         setModalImage(image);
     };
 
-    const loadMore = () => {
+    const loadMore = (prevState) => {
         setPage({ page: prevState.page + 1 })
     };
 

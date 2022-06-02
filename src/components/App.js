@@ -98,7 +98,13 @@ export class App extends Component {
                     />
                 )}
 
-                <LoadMore isLoading={isLoading} loadMore={this.loadMore} />
+
+
+                {hits.length > 0 &&
+                    <LoadMore isLoading={isLoading} loadMore={this.loadMore} />
+                }
+
+
                 {isLoading && <Loader />}
             </div>
         );

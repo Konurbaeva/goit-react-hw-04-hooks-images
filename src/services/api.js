@@ -1,5 +1,5 @@
 import axios from "axios";
-import settings from "./settings";
+import settings from "../components/settings";
 
 const { BASE_URL, API_KEY } = settings;
 axios.defaults.baseURL = BASE_URL;

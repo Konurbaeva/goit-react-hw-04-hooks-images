@@ -5,74 +5,48 @@ import ImageGallery from "./ImageGallery/ImageGallery";
 import Searchbar from "./Searchbar/Searchbar";
 import Loader from "./Loader/Loader";
 import Modal from "./Modal/Modal";
-
-
-import { getSearch } from "services/api"
 import { LoadMore } from './LoadMore';
+
+import axios from "axios";
+import settings from "./settings";
+
+const { BASE_URL, API_KEY } = settings;
+axios.defaults.baseURL = BASE_URL;
 
 export default function App() {
 
     const [hits, setHits] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [page, setPage] = useState(1);
-    const [currentPage, setCurrentPage] = useState(1);
+    // const [currentPage, setCurrentPage] = useState(1);
     const [showModal, setShowModal] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [totalHits, setTotalHits] = useState(0);
+    //  const [totalHits, setTotalHits] = useState(0);
     const [errorMsg, setErrorMsg] = useState('');
-    const [per_page, setPerPage] = useState(7);
+    const [perPage, setPerPage] = useState(7);
     const [modalImage, setModalImage] = useState(null);
 
-
     const handleFormSubmit = queryFromSearchbar => {
-        setSearchQuery({ searchQuery: queryFromSearchbar })
+        // setSearchQuery({ searchQuery: queryFromSearchbar })
+
+        console.log('searchQuery: ', searchQuery)
+        setSearchQuery(queryFromSearchbar)
         setHits([])
         setPage(1)
     };
 
-    // componentDidUpdate(prevProps, prevState) {
-    //     const prevPage = prevState.page;
-    //     const nextPage = this.state.page;
-    //     const prevsearchQuery = prevState.searchQuery;
-    //     const searchQuery = this.state.searchQuery;
-
-    //     if (prevPage !== nextPage || prevsearchQuery !== searchQuery) {
-    //         loadResults();
-    //     }
-    // }
-
     useEffect(() => {
-
-
-    }, [page, searchQuery])
-
-
-    const loadResults = () => {
-        const { page, per_page } = this.state;
-
-        setIsLoading(true);
-
-        getSearch(searchQuery, per_page, page)
-            .then((hits) => {
-                // this.setState(prevState => ({
-                //     hits: [...prevState.hits, ...hits], errorMsg: ''
-                // }))
-                setHits(prevState => ({
-                    hits: [...prevState.hits, ...hits]
-                }))
-
-                setErrorMsg('');
-            })
-            .catch((error) =>
-                // this.setState({
-                //     errorMsg: 'Error while loading data. Try again later.'
-                // })
-                setErrorMsg('Error while loading data. Try again later.')
+        async function fetchData() {
+            const response = await axios.get(
+                `?key=${API_KEY}&q=${searchQuery}&image_type=photo&orientation=horizontal&per_page=${perPage}&page=${page}`
             )
-            .finally(() => {
-                setIsLoading(false)
-            });
-    };
+            const data = await response.data.hits
+
+            setHits(data);
+        }
+
+        fetchData();
+    }, [searchQuery, page, perPage]);
 
     const toggleModal = () => setShowModal(!showModal);
 

@@ -40,7 +40,7 @@ export default function App() {
 
     const handleFormSubmit = queryFromSearchbar => {
         setSearchQuery(queryFromSearchbar)
-        setCurrentPage(1);
+        setCurrentPage();
         setHits([])
         setPage(1)
         setErrorMsg(null);
@@ -57,7 +57,7 @@ export default function App() {
             APIfetch({ searchQuery: searchQuery, currentPage, page })
                 .then(response => {
                     setHits(prevResults => [...prevResults, ...response]);
-                    // setPage(prevPage => prevPage + 1);
+
                 })
                 .catch(error => setErrorMsg(error.message))
                 .finally(() => setIsLoading(false));

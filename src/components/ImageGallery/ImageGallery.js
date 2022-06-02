@@ -11,7 +11,9 @@ function ImageGallery({ images, openModal }) {
                     key={id}
                     webImage={webformatURL}
                     description={tags}
-                    openModal={() => openModal(largeImageURL)}
+                    openModal={openModal}
+                    largeImageURL={largeImageURL}
+
                 />
             ))}
         </ul>

@@ -1,14 +1,14 @@
 import styles from './ImageGalleryItem.module.css';
 import PropTypes from 'prop-types';
 
-function ImageGalleryItem({ webImage, openModal, description }) {
+function ImageGalleryItem({ webImage, openModal, description, largeImageURL }) {
     return (
         <li className={styles.ImageGalleryItem}>
             <img
                 className={styles.ImageGalleryItem_image}
                 src={webImage}
                 alt={description}
-                onClick={openModal}
+                onClick={() => openModal(largeImageURL)}
             />
         </li>
     );

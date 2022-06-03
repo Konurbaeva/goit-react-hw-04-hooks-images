@@ -4,6 +4,8 @@ import styles from './ImageGallery.module.css'
 import PropTypes from 'prop-types';
 
 function ImageGallery({ images, openModal }) {
+    console.log('images: ', images);
+
     return (
         <ul className={styles.ImageGallery}>
             {images.map(({ id, webformatURL, largeImageURL, tags }) => (

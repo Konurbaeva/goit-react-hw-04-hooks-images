@@ -18,6 +18,7 @@ const APIfetch = async ({
     searchQuery = '',
     perPage = 7,
     page = 1,
+    currentPage = 1,
 } = {}) => {
     const response = await axios
         .get(
@@ -50,21 +51,21 @@ export default function App() {
             return;
         }
 
-        const loadResults = () => {
+        const fetchResults = () => {
             setIsLoading(true);
 
-            APIfetch({ searchQuery: searchQuery, currentPage, page })
+            APIfetch({ searchQuery: searchQuery, currentPage: currentPage })
                 .then(response => {
                     setHits(prevResults => [...prevResults, ...response]);
-
+                    console.log('currentPage: ', currentPage);
                 })
-                .catch(error => setErrorMsg(error.message))
+                .catch(error => setErrorMsg(error))
                 .finally(() => setIsLoading(false));
         };
 
-        loadResults();
+        fetchResults();
 
-    }, [searchQuery, currentPage, page]);
+    }, [currentPage, searchQuery]);
 
     const toggleModal = () => setShowModal(!showModal);
 
@@ -73,12 +74,9 @@ export default function App() {
         setModalImage(image);
     };
 
-
-    // const loadMore = () => {
-    //     setCurrentPage(prevPage => prevPage + 1);
-    // };
-
     const loadMore = () => {
+        // setCurrentPage(prevState => ({ ...prevState, page: prevState + 1 }));
+
         setCurrentPage(prevPage => prevPage + 1);
     };
 

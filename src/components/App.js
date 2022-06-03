@@ -1,5 +1,4 @@
 import styles from './App.module.css';
-
 import { useState, useEffect } from "react";
 import ImageGallery from "./ImageGallery/ImageGallery";
 import Searchbar from "./Searchbar/Searchbar";
@@ -17,7 +16,6 @@ axios.defaults.baseURL = BASE_URL;
 const APIfetch = async ({
     searchQuery = '',
     perPage = 7,
-    page = 1,
     currentPage = 1,
 } = {}) => {
     const response = await axios
@@ -30,21 +28,17 @@ const APIfetch = async ({
 export default function App() {
     const [hits, setHits] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
-    const [page, setPage] = useState(1);
     const [currentPage, setCurrentPage] = useState(1);
     const [showModal, setShowModal] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [errorMsg, setErrorMsg] = useState('');
-    const [perPage, setPerPage] = useState(7);
+
     const [modalImage, setModalImage] = useState(null);
 
     const handleFormSubmit = queryFromSearchbar => {
         setSearchQuery(queryFromSearchbar)
         setCurrentPage(1);
         setHits([])
-        setPage(1)
-        setErrorMsg(null);
-        setPerPage(7);
+
     };
 
     useEffect(() => {
@@ -59,7 +53,7 @@ export default function App() {
                 .then(response => {
                     setHits(prevResults => [...prevResults, ...response]);
                 })
-                .catch(error => setErrorMsg(error))
+                .catch(error => console.error(error))
                 .finally(() => setIsLoading(false));
         };
 

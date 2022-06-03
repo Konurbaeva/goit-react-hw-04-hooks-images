@@ -22,7 +22,7 @@ const APIfetch = async ({
 } = {}) => {
     const response = await axios
         .get(
-            `?key=${API_KEY}&q=${searchQuery}&image_type=photo&orientation=horizontal&per_page=${perPage}&page=${page}`);
+            `?key=${API_KEY}&q=${searchQuery}&image_type=photo&orientation=horizontal&per_page=${perPage}&page=${currentPage}`);
     return response.data.hits;
 };
 
@@ -40,10 +40,11 @@ export default function App() {
 
     const handleFormSubmit = queryFromSearchbar => {
         setSearchQuery(queryFromSearchbar)
-        setCurrentPage();
+        setCurrentPage(1);
         setHits([])
         setPage(1)
         setErrorMsg(null);
+        setPerPage(7);
     };
 
     useEffect(() => {
@@ -57,7 +58,6 @@ export default function App() {
             APIfetch({ searchQuery: searchQuery, currentPage: currentPage })
                 .then(response => {
                     setHits(prevResults => [...prevResults, ...response]);
-                    console.log('currentPage: ', currentPage);
                 })
                 .catch(error => setErrorMsg(error))
                 .finally(() => setIsLoading(false));
@@ -75,8 +75,6 @@ export default function App() {
     };
 
     const loadMore = () => {
-        // setCurrentPage(prevState => ({ ...prevState, page: prevState + 1 }));
-
         setCurrentPage(prevPage => prevPage + 1);
     };
 

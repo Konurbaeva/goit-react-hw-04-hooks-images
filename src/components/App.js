@@ -33,7 +33,6 @@ export default function App() {
     const [currentPage, setCurrentPage] = useState(1);
     const [showModal, setShowModal] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    //  const [totalHits, setTotalHits] = useState(0);
     const [errorMsg, setErrorMsg] = useState('');
     const [perPage, setPerPage] = useState(7);
     const [modalImage, setModalImage] = useState(null);

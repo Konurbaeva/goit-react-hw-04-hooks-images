@@ -34,6 +34,8 @@ export default function App() {
 
     const [modalImage, setModalImage] = useState(null);
 
+    console.log('HITS: ', hits)
+
     const handleFormSubmit = queryFromSearchbar => {
         setSearchQuery(queryFromSearchbar)
         setCurrentPage(1);
